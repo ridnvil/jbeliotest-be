@@ -7,7 +7,7 @@ Before running this backend, please to update the config.go inside /pkg/config/c
 
 ```go
 type GetEnvConfig struct {
-	Host      string `env:"HOST" envDefault:"host=192.168.100.73 user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta"`
+	Host      string `env:"HOST" envDefault:"host=localhost user=ridwan password=mypassword dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta"`
 	RedisAddr string `env:"REDIS_ADDR" envDefault:"localhost:6379"`
 	APIKey    string `env:"API_KEY" envDefault:"SECRET_KEY"`
 }
