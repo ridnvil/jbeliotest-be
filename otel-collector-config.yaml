@@ -1,12 +1,13 @@
 receivers:
   otlp:
     protocols:
-      http:
-        endpoint: tempo:4317
+      http: {}
+      grpc: {}
 
 exporters:
   otlp:
-    endpoint: otel-collector:4318
+    grpc:
+      endpoint: tempo:4317
     tls:
       insecure: true
 
