@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/caarlos0/env/v11"
+	"github.com/gofiber/contrib/otelfiber/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"go.opentelemetry.io/otel"
@@ -75,6 +76,7 @@ func main() {
 
 	logger.InitLogger()
 	app := fiber.New()
+	app.Use(otelfiber.Middleware())
 
 	rdb := config.NewRedisClient(cnfEnv)
 	channel := "process_dataset:insert"
