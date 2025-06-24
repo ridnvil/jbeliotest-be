@@ -78,9 +78,7 @@ func main() {
 	app := fiber.New(fiber.Config{
 		AppName: "gofiber-app",
 	})
-	app.Use(otelfiber.Middleware(
-		otelfiber.WithTracerProvider(tp),
-	))
+	app.Use(otelfiber.Middleware())
 
 	rdb := config.NewRedisClient(cnfEnv)
 	channel := "process_dataset:insert"
