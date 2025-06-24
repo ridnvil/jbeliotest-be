@@ -13,7 +13,7 @@ services:
       - redis
     networks:
       opentelemetry_implementation_network:
-        ipv4_address: 172.19.0.7
+        ipv4_address: 172.18.0.7
 
   otel-collector:
     image: otel/opentelemetry-collector:latest
@@ -26,7 +26,7 @@ services:
       - tempo
     networks:
       opentelemetry_implementation_network:
-        ipv4_address: 172.19.0.4
+        ipv4_address: 172.18.0.4
 
   tempo:
     image: grafana/tempo:latest
@@ -38,7 +38,7 @@ services:
       - "4317:4317"
     networks:
       opentelemetry_implementation_network:
-        ipv4_address: 172.19.0.3
+        ipv4_address: 172.18.0.3
 
   grafana:
     image: grafana/grafana:latest
@@ -51,7 +51,7 @@ services:
       - grafana-storage:/var/lib/grafana
     networks:
       opentelemetry_implementation_network:
-        ipv4_address: 172.19.0.2
+        ipv4_address: 172.18.0.2
 
   redis:
     image: redis
@@ -60,7 +60,7 @@ services:
       - "6379:4049"
     networks:
       opentelemetry_implementation_network:
-        ipv4_address: 172.19.0.6
+        ipv4_address: 172.18.0.6
 
 volumes:
   grafana-storage:
@@ -70,4 +70,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.19.0.0/24
+        - subnet: 172.18.0.0/24
