@@ -3,11 +3,11 @@ receivers:
     protocols:
       http: {}
       grpc:
-        endpoint: 172.18.0.3:4317
+        endpoint: tempo:4317
 
 exporters:
   otlp:
-    endpoint: 172.18.0.3:4317
+    endpoint: tempo:4317
     tls:
       insecure: true
 
