@@ -10,6 +10,9 @@ services:
     depends_on:
       - otel-collector
       - redis
+    networks:
+      opentelemetry_implementation_network:
+        ipv4_address: 172.19.0.7
 
   otel-collector:
     image: otel/opentelemetry-collector:latest
@@ -20,14 +23,21 @@ services:
       - "4318:4318"  # HTTP OTLP
     depends_on:
       - tempo
+    networks:
+      opentelemetry_implementation_network:
+        ipv4_address: 172.19.0.4
 
   tempo:
     image: grafana/tempo:latest
+    container_name: tempo_server
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./tempo.yaml:/etc/tempo.yaml
     ports:
       - "4317:4317"
+    networks:
+      opentelemetry_implementation_network:
+        ipv4_address: 172.19.0.3
 
   grafana:
     image: grafana/grafana:latest
@@ -38,12 +48,25 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana-storage:/var/lib/grafana
+    networks:
+      opentelemetry_implementation_network:
+        ipv4_address: 172.19.0.2
 
   redis:
     image: redis
     container_name: redis-jb
     ports:
       - "6379:4049"
+    networks:
+      opentelemetry_implementation_network:
+        ipv4_address: 172.19.0.6
 
 volumes:
   grafana-storage:
+
+networks:
+  opentelemetry_implementation_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
