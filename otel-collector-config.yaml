@@ -2,14 +2,15 @@ receivers:
   otlp:
     protocols:
       http: {}
-      grpc: {}
+      grpc:
+        endpoint: tempo:4317
 
-exporters:
-  otlp:
-    grpc:
-      endpoint: tempo:4317
-    tls:
-      insecure: true
+#exporters:
+#  otlp:
+#    grpc:
+#
+#    tls:
+#      insecure: true
 
 service:
   pipelines:
