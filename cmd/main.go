@@ -5,6 +5,11 @@ import (
 	"github.com/caarlos0/env/v11"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/sdk/resource"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.32.0"
 	"jubeliotesting/internal/api"
 	"jubeliotesting/internal/domain"
 	"jubeliotesting/internal/repository"
@@ -18,9 +23,41 @@ import (
 	"syscall"
 )
 
+func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
+	exporter, err := otlptracehttp.New(ctx,
+		otlptracehttp.WithEndpoint("otel-collector:4318"),
+		otlptracehttp.WithInsecure(),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	res, _ := resource.New(ctx,
+		resource.WithAttributes(
+			semconv.ServiceName("gofiber-app"),
+		),
+	)
+
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(exporter),
+		sdktrace.WithResource(res),
+	)
+
+	otel.SetTracerProvider(tp)
+	return tp, nil
+}
+
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	tp, err := initTracer(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		_ = tp.Shutdown(ctx)
+	}()
 
 	var cnfEnv config.GetEnvConfig
 	if err := env.Parse(&cnfEnv); err != nil {
