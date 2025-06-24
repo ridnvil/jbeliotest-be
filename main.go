@@ -78,7 +78,9 @@ func main() {
 	app := fiber.New(fiber.Config{
 		AppName: "gofiber-app",
 	})
-	app.Use(otelfiber.Middleware())
+	app.Use(otelfiber.Middleware(
+		otelfiber.WithTracerProvider(tp),
+	))
 
 	rdb := config.NewRedisClient(cnfEnv)
 	channel := "process_dataset:insert"
@@ -113,9 +115,12 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
-	if err = app.Listen(":3000"); err != nil {
-		log.Fatal(err)
-	}
+	go func() {
+		// Lakukan pekerjaan yang memerlukan trace di sini
+		if err = app.Listen(":3000"); err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	<-quit
 
