@@ -2,11 +2,12 @@ receivers:
   otlp:
     protocols:
       http: {}
-      grpc: {}
+      grpc:
+        endpoint: tempo:4317
 
 exporters:
   otlp:
-    enpoint: tempo:4317
+    endpoint: tempo:4317
     tls:
       insecure: true
 
