@@ -65,6 +65,8 @@ func main() {
 		_ = tp.Shutdown(ctx)
 	}()
 
+	otel.SetTracerProvider(tp)
+
 	db, err := config.CreateConnection(cnfEnv)
 	if err != nil {
 		log.Fatal(err)
