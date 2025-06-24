@@ -75,7 +75,9 @@ func main() {
 	}
 
 	logger.InitLogger()
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		AppName: "gofiber-app",
+	})
 	app.Use(otelfiber.Middleware())
 
 	rdb := config.NewRedisClient(cnfEnv)
