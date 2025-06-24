@@ -1,8 +1,8 @@
 receivers:
   otlp:
     protocols:
-      http: {}
-      grpc: {}
+      http:
+        endpoint: tempo:4317
 
 exporters:
   otlp:
