@@ -21,7 +21,7 @@ services:
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
-      - "4318:4318"  # HTTP OTLP
+      - "4328:4318"  # HTTP OTLP
     depends_on:
       - tempo
     networks:
