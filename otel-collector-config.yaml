@@ -5,12 +5,9 @@ receivers:
       grpc:
         endpoint: tempo:4317
 
-#exporters:
-#  otlp:
-#    grpc:
-#
-#    tls:
-#      insecure: true
+exporters:
+  otlp:
+    enpoint: tempo:4317
 
 service:
   pipelines:
