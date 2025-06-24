@@ -4,6 +4,10 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      HOST: host=192.168.100.73 user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta
+      API_KEY: MYSECRET_KEY
+      REDIS_ADDR: 192.168.100.73:4004
     depends_on:
       - otel-collector
 
