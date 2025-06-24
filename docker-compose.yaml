@@ -5,11 +5,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      HOST: host=192.168.100.73 user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta
+      HOST: host=some-postgres user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta
       API_KEY: MYSECRET_KEY
-      REDIS_ADDR: 192.168.100.73:4004
+      REDIS_ADDR: redis:6379
     depends_on:
       - otel-collector
+      - redis
 
   otel-collector:
     image: otel/opentelemetry-collector:latest
@@ -38,6 +39,12 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana-storage:/var/lib/grafana
+
+  redis:
+    image: redis
+    container_name: redis-jb
+    ports:
+      - "6379:4049"
 
 volumes:
   grafana-storage:
