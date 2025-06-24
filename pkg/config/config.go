@@ -10,9 +10,10 @@ import (
 )
 
 type GetEnvConfig struct {
-	Host      string `env:"HOST" envDefault:"host=192.168.100.73 user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta"`
-	RedisAddr string `env:"REDIS_ADDR" envDefault:"localhost:6379"`
-	APIKey    string `env:"API_KEY" envDefault:"SECRET_KEY"`
+	Host          string `env:"HOST" envDefault:"host=192.168.100.73 user=ridwan password=M1r34cl3 dbname=jubeliotest port=5432 sslmode=disable TimeZone=Asia/Jakarta"`
+	RedisAddr     string `env:"REDIS_ADDR" envDefault:"localhost:6379"`
+	APIKey        string `env:"API_KEY" envDefault:"SECRET_KEY"`
+	TempoEndpoint string `env:"COLLECTOR_ENDPOINT" envDefault:"localhost:4318"`
 }
 
 var (

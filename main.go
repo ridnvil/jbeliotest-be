@@ -24,9 +24,9 @@ import (
 	"syscall"
 )
 
-func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
+func initTracer(ctx context.Context, cnfg config.GetEnvConfig) (*sdktrace.TracerProvider, error) {
 	exporter, err := otlptracehttp.New(ctx,
-		otlptracehttp.WithEndpoint("otel-collector:4318"),
+		otlptracehttp.WithEndpoint(cnfg.TempoEndpoint),
 		otlptracehttp.WithInsecure(),
 	)
 	if err != nil {
@@ -49,21 +49,21 @@ func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
 }
 
 func main() {
+	var cnfEnv config.GetEnvConfig
+	if err := env.Parse(&cnfEnv); err != nil {
+		log.Fatal(err)
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	tp, err := initTracer(ctx)
+	tp, err := initTracer(ctx, cnfEnv)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer func() {
 		_ = tp.Shutdown(ctx)
 	}()
-
-	var cnfEnv config.GetEnvConfig
-	if err := env.Parse(&cnfEnv); err != nil {
-		log.Fatal(err)
-	}
 
 	db, err := config.CreateConnection(cnfEnv)
 	if err != nil {
