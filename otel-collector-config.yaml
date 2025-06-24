@@ -5,7 +5,7 @@ receivers:
 
 exporters:
   otlp:
-    endpoint: tempo:4317
+    endpoint: 172.18.0.3:4317
     tls:
       insecure: true
 
