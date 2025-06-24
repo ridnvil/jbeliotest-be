@@ -2,9 +2,9 @@ receivers:
   otlp:
     protocols:
       http:
-        endpoint: 172.18.0.3:4317
-      grpc:
         endpoint: 172.18.0.3:4318
+      grpc:
+        endpoint: 172.18.0.3:4317
 
 exporters:
   otlp:
