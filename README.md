@@ -13,11 +13,11 @@ type GetEnvConfig struct {
 }
 ```
 
-or using package 
+**or using package 
 ```
 github.com/caarlos0/env/v11
 ```
-If using this package, if you use goland, please set the env on this.
+If using this package, if you use goland, please set the env on this.**
 
 ![img.png](img.png)
 

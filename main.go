@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/caarlos0/env/v11"
 	"github.com/gofiber/contrib/otelfiber/v2"
 	"github.com/gofiber/fiber/v2"
@@ -19,6 +20,7 @@ import (
 	"jubeliotesting/internal/worker"
 	"jubeliotesting/pkg/config"
 	"jubeliotesting/pkg/logger"
+	"jubeliotesting/pkg/middleware"
 	"os"
 	"os/signal"
 	"syscall"
@@ -83,6 +85,7 @@ func main() {
 		AppName: "gofiber-app",
 	})
 	app.Use(otelfiber.Middleware())
+	app.Use(middleware.OpenTelemetryMiddleware())
 
 	rdb := config.NewRedisClient(cnfEnv)
 	channel := "process_dataset:insert"
@@ -118,13 +121,13 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
-		// Lakukan pekerjaan yang memerlukan trace di sini
 		if err = app.Listen(":3000"); err != nil {
 			log.Fatal(err)
 		}
 	}()
 
 	<-quit
+	fmt.Println("Receive Shutdown signal ...")
 
 	cancel()
 	if err = app.Shutdown(); err != nil {
