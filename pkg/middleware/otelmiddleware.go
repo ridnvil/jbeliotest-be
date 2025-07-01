@@ -9,8 +9,7 @@ import (
 
 func OpenTelemetryMiddleware() fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		tracer := otel.Tracer("myapp")
-		log.Info(c.Context(), c.Method(), c.Path(), c.IP())
+		tracer := otel.Tracer("gofiber-app")
 		_, span := tracer.Start(c.Context(), c.Method()+" "+c.Path())
 		c.Locals("otel-span", span)
 		defer span.End()

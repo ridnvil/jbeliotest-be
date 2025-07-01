@@ -78,7 +78,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	tp.Tracer("myapp")
+	tp.Tracer("gofiber-app")
 
 	logger.InitLogger()
 	app := fiber.New(fiber.Config{

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="jubeliotest@192.168.100.73" uuid="102961cb-2941-4884-b56f-c52358ed0505">
+    <data-source source="LOCAL" name="jubeliotest@localhost" uuid="c5c280bf-82f1-4834-b131-baaff5c05591">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://192.168.100.73:5432/jubeliotest</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/jubeliotest</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
