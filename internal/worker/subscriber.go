@@ -59,7 +59,7 @@ func (s *Subscriber) StartSubscriber(ctx context.Context, rdb *redis.Client, cha
 			}
 
 			excelReader := &excel.ExcelReaderImpl{}
-			rows, err := excelReader.ReadExcel("dataset/kaggle_supermarket_dataset.xlsx")
+			rows, err := excelReader.ReadExcel("dataset/dataset.xlsx")
 			if err != nil {
 				log.Println(err)
 			}

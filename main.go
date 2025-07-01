@@ -117,6 +117,9 @@ func main() {
 	salesHandler := api.NewSalesHandler(salesService, cnfEnv)
 	salesHandler.SalesRoute(app)
 
+	uploadHandler := api.NewUploadDataSetHandler(cnfEnv)
+	uploadHandler.Route(app)
+
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
